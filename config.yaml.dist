@@ -3,6 +3,25 @@
 # path is provided, Dex's HTTP service will listen at a non-root URL.
 issuer: http://127.0.0.1:5556/dex
 
+# Dex can expand environment variables in the config file.
+#
+# To enable this feature, ensure the DEX_EXPAND_ENV environment variable is either unset,
+# set to a "truthy" value (e.g., "1", "true", "TRUE"), or any unrecognized value.
+# To disable this feature, set DEX_EXPAND_ENV to a "falsy" value (e.g., "0", "false", "FALSE").
+#
+# Expansion uses Go's os.ExpandEnv, which supports the $VAR and ${VAR} syntax.
+#
+# Example:
+#
+#   storage:
+#     type: postgres
+#     config:
+#       host: '$DEX_FOO_POSTGRES_HOST'
+#       password: '$DEX_FOO_POSTGRES_PASSWORD'
+#
+# If DEX_EXPAND_ENV is enabled and the corresponding environment variables are set,
+# Dex will substitute their values at runtime.
+
 # The storage configuration determines where Dex stores its state.
 # Supported options include:
 #   - SQL flavors

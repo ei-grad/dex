@@ -23,6 +23,25 @@ import (
 )
 
 // Config is the config format for the main application.
+//
+// Dex can expand environment variables in the config file.
+//
+// To enable this feature, ensure the DEX_EXPAND_ENV environment variable is either unset,
+// set to a "truthy" value (e.g., "1", "true", "TRUE"), or any unrecognized value.
+// To disable this feature, set DEX_EXPAND_ENV to a "falsy" value (e.g., "0", "false", "FALSE").
+//
+// Expansion uses Go's os.ExpandEnv, which supports the $VAR and ${VAR} syntax.
+//
+// Example:
+//
+//	storage:
+//	  type: postgres
+//	  config:
+//	    host: '$DEX_FOO_POSTGRES_HOST'
+//	    password: '$DEX_FOO_POSTGRES_PASSWORD'
+//
+// If DEX_EXPAND_ENV is enabled and the corresponding environment variables are set,
+// Dex will substitute their values at runtime.
 type Config struct {
 	Issuer    string    `json:"issuer"`
 	Storage   Storage   `json:"storage"`
